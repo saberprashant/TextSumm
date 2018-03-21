@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TL;DR</title>
+
+    <style>
+        body {
+            width: 1060px;
+            margin: 50px auto;
+        }
+
+        path {
+            stroke: #fff;
+        }
+
+        path:hover {
+            opacity: 0.9;
+        }
+
+        rect:hover {
+            fill: blue;
+        }
+
+        .axis {
+            font: 10px sans-serif;
+        }
+
+        .legend tr {
+            border-bottom: 1px solid grey;
+        }
+
+        .legend tr:first-child {
+            border-top: 1px solid grey;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .x.axis path {
+            display: none;
+        }
+
+        .legend {
+            margin-bottom: 76px;
+            display: inline-block;
+            border-collapse: collapse;
+            border-spacing: 0px;
+        }
+
+        .legend td {
+            padding: 4px 5px;
+            vertical-align: bottom;
+        }
+
+        .legendFreq,
+        .legendPerc {
+            align: right;
+            width: 50px;
+        }
+       
+    </style>
+</head>
+
+<body>
+    <div class="myHeading">
+    <h1>TL;DR</h1>
+    <h2>(Too long didn't read)</h2>
+    <h1>Text Summarization</h1>
+    </div>
+    <div ng-app="ATS">
+
+        <div ng-controller="atsctrl">
+            <form name="uploadFile" ng-hide="uploadFileForm">
+
+                <h5 class="popuphead">Upload File</h5>
+                <div>
+                    <input type="file" class="res_btn" ngf-select ng-model="ats.file" name="file" ngf-pattern="text/plain" accept=".txt" ngf-max-size="3MB"
+                    />
+                    <i ng-show="uploadFile.file.$error.maxSize">File too large : max 3MB</i>
+                    <button ng-click="validateFile()" class="btn">Upload</button>
+                    {{fileMessage}}
+                </div>
+            </form>
+            <div id='dashboard'><br></div>
+
+            <div ng-hide="results">
+                <h2>Analysis Results</h2>
+                <div ng-repeat="line in analysis track by $index">
+                    <p>{{line}}</p>
+                </div>
+                <br>
+                <br>
+                <br> 
+                <h2>K-Means Clustering Results</h2>
+                <div ng-repeat="cluster in kClusters track by $index">
+                    <p>{{cluster}}</p>
+                </div>
+                <br>
+                <br> 
+                <h2>Mean-Shift Algorithm Results</h2>
+                <div ng-repeat="cluster in meClusters track by $index">
+                    <p>{{cluster}}</p>
+                </div>
+                <br>
+                <br> 
+                <h2>Mini-Batch Clustering Algorithm Results</h2>
+                <div ng-repeat="cluster in miClusters track by $index">
+                    <p>{{cluster}}</p>
+                </div>
+                <br>
+                <br> 
+                <h2>Agglomerative Hierarchical Clustering Results</h2>
+                <div ng-repeat="cluster in agClusters track by $index">
+                    <p>{{cluster}}</p>
+                </div>
+                <br>
+                <br>
+                <button ng-click="summ=!summ">Summary</button>
+                <div ng-hide="summ">
+                    <h2>Actual Summary</h2>
+                    <div ng-repeat="line in summary track by $index">
+                        <p>{{line}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <bower-components-->
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+        <!--/bower-components> -->
+        <script src="js/libs/d3.v3.min.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/ats/controller.js"></script>
+        <script src="js/ats/factory.js"></script>
+        <script src="js/graphs.js"></script>
+</body>
+
+</html>
